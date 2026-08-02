@@ -18,6 +18,101 @@
 
 \---
 
+---
+
+## POS_CASH_balance
+
+**Purpose**
+
+Contains the monthly repayment history of previous Point-of-Sale (POS) and Cash loans.
+
+Each row represents one month's status of one previous POS/Cash loan.
+
+**Primary Key Candidate**
+
+* Composite Key: (`SK_ID_PREV`, `MONTHS_BALANCE`)
+
+**Foreign Keys**
+
+* `SK_ID_PREV`
+* `SK_ID_CURR`
+
+**Important Columns**
+
+* `MONTHS_BALANCE`
+* `CNT_INSTALMENT`
+* `CNT_INSTALMENT_FUTURE`
+* `SK_DPD`
+* `SK_DPD_DEF`
+* `NAME_CONTRACT_STATUS`
+
+---
+
+## credit_card_balance
+
+**Purpose**
+
+Contains monthly snapshots of customers' previous credit card accounts.
+
+Each row represents one month's activity for one credit card account.
+
+**Primary Key Candidate**
+
+* Composite Key: (`SK_ID_PREV`, `MONTHS_BALANCE`)
+
+**Foreign Keys**
+
+* `SK_ID_PREV`
+* `SK_ID_CURR`
+
+**Important Columns**
+
+* `MONTHS_BALANCE`
+* `AMT_BALANCE`
+* `AMT_CREDIT_LIMIT_ACTUAL`
+* `AMT_DRAWINGS_CURRENT`
+* `AMT_PAYMENT_CURRENT`
+* `AMT_TOTAL_RECEIVABLE`
+* `SK_DPD`
+* `SK_DPD_DEF`
+
+---
+
+## installments_payments
+
+**Purpose**
+
+Contains repayment history for installment loans.
+
+Each row represents one installment payment made (or expected) by a customer.
+
+**Primary Key Candidate**
+
+* Composite Key: (`SK_ID_PREV`, `NUM_INSTALMENT_NUMBER`)
+
+**Foreign Keys**
+
+* `SK_ID_PREV`
+* `SK_ID_CURR`
+
+**Important Columns**
+
+* `NUM_INSTALMENT_VERSION`
+* `NUM_INSTALMENT_NUMBER`
+* `DAYS_INSTALMENT`
+* `DAYS_ENTRY_PAYMENT`
+* `AMT_INSTALMENT`
+* `AMT_PAYMENT`
+
+---
+
+## Updated Notes
+
+* SQL is used for data storage, querying, and preparation.
+* Python will be used for data exploration, visualization, feature engineering, and machine learning.
+* `application_train` is the primary modeling dataset.
+* All remaining tables contain historical customer information and will be aggregated to the customer level before being merged with `application_train` during the Feature Engineering phase.
+* Data type corrections and data quality assessment will be performed in Python after loading the data from MySQL.
 
 
 \# Table Summary
@@ -36,7 +131,11 @@
 
 | previous\_application | One previous Home Credit loan application | SK\_ID\_PREV | SK\_ID\_CURR | 1670214 | 37 | Imported |
 
+| POS_CASH_balance | One monthly record for a previous POS/Cash loan | (SK_ID_PREV, MONTHS_BALANCE) | SK_ID_PREV, SK_ID_CURR | 10001358 | 8 | Imported |
 
+| credit_card_balance | One monthly record for a previous credit card account | (SK_ID_PREV, MONTHS_BALANCE) | SK_ID_PREV, SK_ID_CURR | 3840312 | 23 | Imported |
+
+| installments_payments | One installment payment record | (SK_ID_PREV, NUM_INSTALMENT_NUMBER) | SK_ID_PREV, SK_ID_CURR | 13605401 | 8 | Imported |
 
 \---
 
